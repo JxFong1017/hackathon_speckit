@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
-# Sync Spec Kit toolkit files from the canonical adjacency-speckit repository.
+# Sync Spec Kit toolkit files from SPECKIT_UPDATE_REPO.
 # Does NOT use the current project's git remote origin.
+# This template has no default upstream. Set SPECKIT_UPDATE_REPO to this
+# template's own remote before syncing. Do not point it at another team's Spec Kit.
 #
 # Usage: ./speckit-update.sh [--dry-run] [--json]
 #
 # Environment:
-#   SPECKIT_UPDATE_REPO  Override source URL (SSH tried first, then HTTPS; default: SEEK-Jobs/adjacency-speckit)
+#   SPECKIT_UPDATE_REPO  Required git URL (SSH tried first, then HTTPS)
 #   SPECKIT_UPDATE_REF   Override branch/ref (default: remote HEAD symref, else main)
-#
-# Access order: git@github.com:SEEK-Jobs/adjacency-speckit.git (SSH), then HTTPS fallback.
 
 set -euo pipefail
 
@@ -38,10 +38,6 @@ REPO_ROOT="$(get_repo_root)" || {
     echo "[speckit-update] ERROR: Not a Spec Kit project (.specify/ not found)." >&2
     exit 1
 }
-
-DEFAULT_REPO_SLUG="SEEK-Jobs/adjacency-speckit"
-DEFAULT_SSH_URL="git@github.com:${DEFAULT_REPO_SLUG}.git"
-DEFAULT_HTTPS_URL="https://github.com/${DEFAULT_REPO_SLUG}.git"
 
 SOURCE_REPO=""
 SOURCE_TRANSPORT=""
@@ -85,7 +81,14 @@ _to_https_url() {
 }
 
 _build_repo_candidates() {
-    local base_url="${SPECKIT_UPDATE_REPO:-$DEFAULT_HTTPS_URL}"
+    if [[ -z "${SPECKIT_UPDATE_REPO:-}" ]]; then
+        echo "[speckit-update] ERROR: SPECKIT_UPDATE_REPO is not set." >&2
+        echo "[speckit-update] This template does not sync from another Spec Kit repo." >&2
+        echo "[speckit-update] Set SPECKIT_UPDATE_REPO to this template's git URL when a canonical remote exists." >&2
+        exit 1
+    fi
+
+    local base_url="$SPECKIT_UPDATE_REPO"
     local ssh_url="" https_url=""
 
     if ssh_url="$(_to_ssh_url "$base_url" 2>/dev/null)"; then :; else ssh_url=""; fi
@@ -93,11 +96,6 @@ _build_repo_candidates() {
         :
     else
         https_url="$base_url"
-    fi
-
-    if [[ -z "${SPECKIT_UPDATE_REPO:-}" ]]; then
-        ssh_url="$DEFAULT_SSH_URL"
-        https_url="$DEFAULT_HTTPS_URL"
     fi
 
     CANDIDATE_REPOS=()

@@ -17,7 +17,7 @@ usage() {
     echo ""
     echo "Example:"
     echo "  $0 codebase-standards-assessment ../my-api-repo"
-    echo "  $0 speckit-project-context /Users/me/projects/sidekicker-ui"
+    echo "  $0 speckit-project-context /Users/me/projects/my-app"
 }
 
 if [[ "${1:-}" == "-h" ]] || [[ "${1:-}" == "--help" ]]; then

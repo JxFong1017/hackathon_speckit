@@ -1,22 +1,20 @@
 # Project Context Triage Extension Configuration
-# Copied to .specify/extensions/project-context/project-context-config.yml on install
+# Off by default. New projects are usually greenfield and live in one folder.
+# List sibling codebases here only when implementation lives outside this repo.
 
-targets:
-  - sidekicker-ui
-  - sidekicker-api
-  - hirer-graphql-api
+targets: []
 
-triage_all_targets: true
+triage_all_targets: false
 
 triage_hooks:
-  default: true
+  default: false
   before_constitution:
-    enabled: true
+    enabled: false
   before_specify:
-    enabled: true
+    enabled: false
   before_plan:
-    enabled: true
+    enabled: false
   before_tasks:
-    enabled: true
+    enabled: false
   before_implement:
-    enabled: true
+    enabled: false

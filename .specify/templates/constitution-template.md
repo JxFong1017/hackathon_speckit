@@ -1,48 +1,48 @@
 # [PROJECT_NAME] Constitution
 
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
+<!-- Example: Project Constitution, App Constitution, etc. -->
 
 ## Core Principles
 
 ### [PRINCIPLE_1_NAME]
 
-<!-- Example: I. Library-First -->
+<!-- Example: I. Demo-first -->
 
 [PRINCIPLE_1_DESCRIPTION]
 
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+<!-- Example: Every slice must be showable. P1 is a path a judge can try. Later stories wait until that path works. -->
 
 ### [PRINCIPLE_2_NAME]
 
-<!-- Example: II. CLI Interface -->
+<!-- Example: II. Timebox -->
 
 [PRINCIPLE_2_DESCRIPTION]
 
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+<!-- Example: Scope is whatever fits the event. Out-of-scope work is written down and not built "while we're here". -->
 
 ### [PRINCIPLE_3_NAME]
 
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
+<!-- Example: III. One stack -->
 
 [PRINCIPLE_3_DESCRIPTION]
 
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+<!-- Example: Pick one language and one way to run the app. Do not add a second framework for the demo. -->
 
 ### [PRINCIPLE_4_NAME]
 
-<!-- Example: IV. Integration Testing -->
+<!-- Example: IV. Safe demo data -->
 
 [PRINCIPLE_4_DESCRIPTION]
 
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+<!-- Example: Local or fake data only. No production data, no committed secrets, no real user accounts. -->
 
 ### [PRINCIPLE_5_NAME]
 
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
+<!-- Example: V. Simplicity -->
 
 [PRINCIPLE_5_DESCRIPTION]
 
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
+<!-- Example: The smallest design that makes the P1 demo work. No extension points for a future product. -->
 
 ## [SECTION_2_NAME]
 
@@ -83,7 +83,9 @@ other repos via /speckit-constitution. -->
 
 **Purpose.** Bias every Spec Kit output — `spec.md`, `plan.md`, `tasks.md`, and implementation
 guidance — toward maintainable, simple, reusable code. These are operational, testable rules,
-not aspirations. `/speckit-analyze` treats each **MUST** in this charter as CRITICAL.
+not aspirations. `/speckit-analyze` treats **correctness and safety** failures as CRITICAL.
+Other **MUST** items in this charter are advisory while the first demo is in progress: record the gap and
+keep the P1 demo moving.
 
 **Precedence.** When these rules conflict, resolve in this fixed order:
 
@@ -195,10 +197,9 @@ in Appendix CQ Exception Records.
 
 ### Review checklist — GATING
 
-Engineers **MUST** validate generated output against this list **before** `/speckit-implement`.
-**Status: GATING** — a “No” on any ✱ (MUST-derived) item blocks implementation until resolved or
-recorded as a carve-out/exception. Non-✱ (SHOULD-derived) items are **advisory** and require a
-one-line note when answered “No”.
+Use this list while planning. **Status: advisory while the first demo is in progress.** A “No” blocks
+`/speckit-implement` only when it breaks correctness, safety (secrets, production data), or
+the P1 demo path. Other gaps get a one-line note in the plan and do not stop the build.
 
 - [ ] ✱ R1: Prevailing patterns (naming, layout, errors, state, testing) identified; each deviation justified in one sentence
 - [ ] ✱ R1: No parallel pattern introduced for an already-solved problem without justification
@@ -215,7 +216,7 @@ one-line note when answered “No”.
 
 ### Governance
 
-- **Owner:** `flex-hiring-and-adjacencies` (GitHub `@SEEK-Jobs/flex-hiring-and-adjacencies`).
+- **Owner:** the team using this repository.
 - **Exception path:** record exceptions in the feature `plan.md` Complexity Tracking with owner
   and date; record durable exceptions in **Appendix CQ**. Amend the shared core **only** via
   `/speckit-constitution` with a Sync Impact Report and code-owner review, applied identically to

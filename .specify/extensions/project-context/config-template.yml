@@ -3,28 +3,29 @@
 
 # Codebase repo folder names or paths where project-context.md lives.
 # Resolved in order: absolute path → relative to SPECKIT_PROJECT_ROOT → workspace sibling
-# (parent directory of the Spec Kit project, e.g. sidekicker-ui next to sidekicker-cta).
+# (a sibling codebase, only when specs and code are split across repos).
 #
 # Examples (multi-root workspace):
 #   targets:
-#     - sidekicker-ui
-#     - sidekicker-api
+#     - my-web
+#     - my-api
 targets: []
 
 # When true, run triage for every target listed above. When false, only the first resolvable target.
-triage_all_targets: true
+# Default: off until a team lists real codebases.
+triage_all_targets: false
 
 # Per-hook triage toggles (existing Spec Kit events only).
 # Set "default" to enable for all hooked events, then override per-event.
 triage_hooks:
-  default: true
+  default: false
   before_constitution:
-    enabled: true
+    enabled: false
   before_specify:
-    enabled: true
+    enabled: false
   before_plan:
-    enabled: true
+    enabled: false
   before_tasks:
-    enabled: true
+    enabled: false
   before_implement:
-    enabled: true
+    enabled: false

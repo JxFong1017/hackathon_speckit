@@ -12,7 +12,7 @@ hooks:
     condition: null
   - extension: project-context
     command: speckit.project-context.triage
-    enabled: true
+    enabled: false
     optional: true
     prompt: Check project-context freshness before constitution?
     description: Triage project-context before constitution (brownfield onboarding)
@@ -27,7 +27,7 @@ hooks:
     condition: null
   - extension: project-context
     command: speckit.project-context.triage
-    enabled: true
+    enabled: false
     optional: true
     prompt: Check project-context freshness before specification?
     description: Triage project-context before specification
@@ -50,7 +50,7 @@ hooks:
     condition: null
   - extension: project-context
     command: speckit.project-context.triage
-    enabled: true
+    enabled: false
     optional: true
     prompt: Check project-context freshness before planning?
     description: Triage project-context before implementation planning
@@ -65,7 +65,7 @@ hooks:
     condition: null
   - extension: project-context
     command: speckit.project-context.triage
-    enabled: true
+    enabled: false
     optional: true
     prompt: Check project-context freshness before task generation?
     description: Triage project-context before task generation
@@ -80,7 +80,7 @@ hooks:
     condition: null
   - extension: project-context
     command: speckit.project-context.triage
-    enabled: true
+    enabled: false
     optional: true
     prompt: Check project-context freshness before implementation?
     description: Triage project-context before implementation

@@ -53,7 +53,7 @@ Override at runtime with `--target PATH` or `TARGET_REPO_ROOT`.
 
 ## Installation
 
-Bundled with adjacency-speckit under `.specify/extensions/project-context/`. Sync into consumer projects via `/speckit-update`.
+Bundled with this template under `.specify/extensions/project-context/`. Freshness checks are off until a team lists real target repos.
 
 ## Disabling
 

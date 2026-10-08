@@ -1,6 +1,6 @@
 ---
 name: "speckit-implement"
-description: "Execute the implementation plan by processing tasks.md one JIRA-tracked work unit at a time — each unit uses jira-feature-branch skill for checkout and commit. Requires a JIRA ticket before starting."
+description: "Execute the implementation plan on the current feature branch, one work unit at a time, P1 demo slice first. No ticket tracker is required."
 compatibility: "Requires spec-kit project structure with .specify/ directory"
 metadata:
   author: "github-spec-kit"
@@ -148,62 +148,53 @@ You **MUST** consider the user input before proceeding (if not empty).
    - **Task dependencies**: Sequential vs parallel execution rules
    - **Task details**: ID, description, file paths, parallel markers [P]
    - **Execution flow**: Order and dependency requirements
-   - **Work units**: Ordered list of JIRA-tracked implementation units (see step 5b)
+   - **Work units**: Ordered implementation units on the **current feature branch** (see step 5b)
 
-5b. **JIRA ticket resolution (mandatory before any implementation)**:
+5b. **Feature-branch execution model**:
 
-Implementation runs **one work unit at a time** — not all tasks in a single branch. Each unit gets its own branch and commit via the **`jira-feature-branch`** skill.
+Stay on the feature branch created for this spec (`###-feature-name`). Do **not** create a branch per unit. A ticket tracker is **not** required. If `$ARGUMENTS` contains a ticket key, use it only as an optional conventional-commit scope. A missing ticket is not a stop.
 
 **Identify work units** from `tasks.md` (in execution order):
 
-| Unit type    | Phase pattern                        | Branch short-description source              |
-| ------------ | ------------------------------------ | -------------------------------------------- |
-| Setup        | Phase 1                              | `setup` or first setup task keywords         |
-| Foundational | Phase 2                              | `foundational` or key infrastructure keyword |
-| User story   | `## Phase N: User Story M - [Title]` | kebab-case from story title (2–5 words)      |
-| Polish       | Final polish / cross-cutting phase   | `polish` or dominant concern keyword         |
+| Unit type    | Phase pattern                        |
+| ------------ | ------------------------------------ |
+| Setup        | Phase 1                              |
+| Foundational | Phase 2                              |
+| User story   | `## Phase N: User Story M - [Title]` |
+| Polish       | Final polish / cross-cutting phase   |
 
-**Resolve JIRA ticket per unit** (first match wins):
+Record for each unit: `{ unit_id, task_ids[] }`.
 
-1.  JIRA key in the phase heading or unit metadata — e.g. `[INFO-123]`, `(JIRA: INFO-123)`, `INFO-123:`
-2.  JIRA key on any incomplete task line in that unit
-3.  Default ticket from `$ARGUMENTS` or the user message (pattern `[A-Z][A-Z0-9]+-\d+`)
-4.  **If still missing for any unit** → **STOP**. Ask the user for the JIRA ticket number(s) before proceeding. Do not checkout branches or write code until every upcoming unit has a ticket.
+6. **Execute implementation one work unit at a time** on the current branch:
 
-When asking, show the work-unit table with missing tickets and accept either one default ticket for all units or a per-unit mapping.
+   For **each work unit** in order, repeat this cycle. After the **P1 user story** unit, **stop** and tell the user the demo slice is ready. Continue later stories only if the user asks to keep building or already asked to implement everything.
 
-Record for each unit: `{ unit_id, ticket_exact, ticket_lower, branch_suffix, task_ids[] }`.
-
-6. **Execute implementation one work unit at a time** (do **not** batch all tasks on one branch):
-
-   For **each work unit** in order, repeat this cycle until all units are complete:
-
-   ### 6a. Branch checkout (`jira-feature-branch`)
-   - **Read** `.cursor/skills/jira-feature-branch/SKILL.md` and follow **Workflow: sync and checkout** exactly.
-   - Inputs: `{ticket_exact}` and `{branch_suffix}` for the current unit.
-   - Example: ticket `INFO-123`, suffix `hirer-login-widget` → branch `info-123-hirer-login-widget`.
-   - Stop on sync/rebase failures; do not implement until the branch is ready.
+   ### 6a. Confirm the feature branch
+   - Run `git branch --show-current`.
+   - Implement on that branch. Do not check out a new branch per unit.
+   - If the worktree is not a git repo, continue without commits and say so.
 
    ### 6b. Implement tasks in this unit only
    - Run **only** incomplete tasks belonging to the current work unit.
    - **Respect dependencies**: Sequential tasks in order; parallel tasks `[P]` together when safe.
-   - **Follow TDD**: Test tasks before their implementation tasks.
+   - **Follow TDD**: Test tasks before their implementation tasks when those tests exist.
    - **File-based coordination**: Same-file tasks stay sequential.
    - **Validation checkpoint**: Verify unit completion before commit.
-   - Do **not** start tasks from the next unit on this branch.
+   - Do **not** start tasks from the next unit in this cycle.
 
-   ### 6c. Commit (`jira-feature-branch`)
-   - **Read** `.cursor/skills/jira-feature-branch/SKILL.md` and follow **Workflow: commit with conventional format**.
-   - Subject: `<type>({ticket_exact}): {brief description of this unit's change}` — derive type and description from unit title or completed tasks (`feat` for user stories, `chore` for setup/foundational/polish).
+   ### 6c. Commit
+   - Subject: `<type>: {brief description of this unit's change}` — `feat` for user stories, `chore` for setup, foundational, or polish.
+   - If the user supplied a ticket key, `<type>(TICKET): ...` is allowed. Do not invent a ticket.
    - Stage only files changed for this unit.
-   - Verify with `git log -1 --oneline` that the subject matches `<type>({ticket_exact}):`.
+   - Skip the commit when there is nothing to commit or the user asked not to commit. The optional `after_implement` git hook may still offer a commit at the end.
 
    ### 6d. Mark progress
    - Mark completed tasks `[X]` in `tasks.md`.
-   - Report: unit name, branch, commit SHA, tasks completed.
-   - Proceed to the next work unit (returns to 6a).
+   - Report: unit name, branch, commit SHA if one was created, tasks completed.
+   - After P1, stop for a demo check unless the user already asked to continue.
+   - Otherwise proceed to the next work unit (returns to 6a).
 
-   **Parallel units** (different user stories): still run sequentially in this workflow unless the user explicitly requests parallel agents — each story gets its own branch/commit cycle.
+   **Parallel units** (different user stories): still run sequentially unless the user explicitly requests parallel agents.
 
 7. Implementation execution rules:
    - **Setup first**: Initialize project structure, dependencies, configuration
@@ -219,8 +210,8 @@ Record for each unit: `{ unit_id, ticket_exact, ticket_lower, branch_suffix, tas
    - For parallel tasks [P], continue with successful tasks, report failed ones
    - Provide clear error messages with context for debugging
    - Suggest next steps if implementation cannot proceed
-   - **IMPORTANT** For completed tasks, mark `[X]` in `tasks.md` after the unit commit (step 6d)
-   - **IMPORTANT** Never commit without the conventional `<type>(JIRA-KEY):` format — always use `jira-feature-branch` commit rules
+   - **IMPORTANT** For completed tasks, mark `[X]` in `tasks.md` after the unit (step 6d)
+   - **IMPORTANT** When you commit, use a conventional commit subject. Do not require a ticket key.
 
 9. Completion validation:
    - Verify all required tasks are completed

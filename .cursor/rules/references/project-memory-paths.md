@@ -1,18 +1,30 @@
 # Project Memory Paths
 
-Canonical path resolution for constitution / project context / roots lives in `.cursor/rules/specify-rules.md` (**Project memory paths**). This file holds multi-root examples and the **architecture discovery order**.
+Canonical path resolution for constitution / project context / roots lives in `.cursor/rules/specify-rules.md` (**Project memory paths**). This file holds examples and the **architecture discovery order**.
 
-## Multi-root workspace
+## Default: one repository
 
-One workspace may contain a Spec Kit project (e.g. **sidekicker-cta** — `specs/`, constitution) and separate codebases (e.g. **sidekicker-ui**, **sidekicker-api** — each with its own `project-context.md` and optional architecture docs).
+The default checkout is one repo. Specs, constitution, and application code share that root.
 
 | Memory file | Always resolve from | Example path |
 | ----------- | ------------------- | ------------ |
-| **Constitution** | The Spec Kit project using the toolkit | `sidekicker-cta/.specify/memory/constitution.md` |
-| **Project context** | The codebase where implementation lives | `sidekicker-ui/.specify/memory/project-context.md` or `sidekicker-api/.specify/memory/project-context.md` |
-| **Architecture** | Same codebase as project context (`TARGET_REPO_ROOT`) | `docs/architecture.md` or root `README.md` (Architecture section) — e.g. `sidekicker-api/docs/architecture.md` or `sidekicker-ui/README.md` |
+| **Constitution** | This repo | `.specify/memory/constitution.md` |
+| **Project context** | This repo, if the file exists | `.specify/memory/project-context.md` |
+| **Architecture** | This repo, if a doc exists | `docs/architecture.md` or an Architecture section in `README.md` |
 
-Pick the correct codebase from feature scope (UI vs API). When specs and code share one repo, all three are under that repo. Never load architecture from the spec hub or toolkit when implementation targets a sibling codebase.
+`SPECKIT_PROJECT_ROOT` and `TARGET_REPO_ROOT` are the same directory unless a later customization splits specs and code.
+
+## Multi-root workspace
+
+Use a second root only when a team deliberately keeps specs in one repo and code in another.
+
+| Memory file | Always resolve from | Example path |
+| ----------- | ------------------- | ------------ |
+| **Constitution** | The repo that contains `specs/` | `my-app/.specify/memory/constitution.md` |
+| **Project context** | The codebase where implementation lives | `my-app/.specify/memory/project-context.md` |
+| **Architecture** | Same codebase as project context (`TARGET_REPO_ROOT`) | `docs/architecture.md` |
+
+Never load architecture from an unrelated toolkit checkout when implementation targets this repo.
 
 ## Resolving roots
 
@@ -23,10 +35,10 @@ Pick the correct codebase from feature scope (UI vs API). When specs and code sh
 
 ## Architecture discovery
 
-Stop at the first usable source under `TARGET_REPO_ROOT` (generic; works for backend and frontend):
+Stop at the first usable source under `TARGET_REPO_ROOT`:
 
-1. `docs/architecture.md` — e.g. `sidekicker-api/docs/architecture.md`
-2. Usable markdown under `docs/architecture/` — e.g. `sidekicker-ui/docs/architecture/overview.md`
+1. `docs/architecture.md`
+2. Usable markdown under `docs/architecture/`
 3. Explicit **Architecture** section in root `README.md`
 
 If none exist, skip — do not invent architecture. If more than one source exists and they conflict, warn and prefer the highest-priority usable source.

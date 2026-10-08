@@ -18,23 +18,21 @@ For stack, commands, and structure: read the active feature's `plan.md` and `qui
   - **IF EXISTS only** — never invent architecture content.
   - **Precedence**: architecture doc = intended structure for new/changed code; existing-on-disk still governs contracts/APIs/feature artifacts.
   - **Conflicts**: if architecture doc and current tree disagree, follow architecture for greenfield paths; note drift in plan/research; do not silently invent a third layout.
-- For UI/UX initiatives, features, or projects, require design evidence in
-  `specs/<feature>/references/design/`; if `spec.md` lacks that reference, add a blocking
-  `[NEEDS CLARIFICATION: design reference required for UI/UX work]` instead of inferring UI.
-- For frontend or hirer-visible work, require an explicit Hubble tracking decision
-  (`required`, `not required`, or `N/A`); if missing, add
-  `[NEEDS CLARIFICATION: frontend Hubble tracking decision required]`. Backend tracking belongs
-  under the feature's Observability Strategy (logs, metrics, traces, dashboards, alerts).
+- For UI work, describe the intended experience in `spec.md`. Files under
+  `specs/<feature>/references/design/` are optional. Do not invent layout, copy, or
+  interaction states the team did not describe. If the UI is too vague to build the demo,
+  add `[NEEDS CLARIFICATION: demo UI flow]` instead of guessing.
+- Product analytics and production rollout are optional. Record how someone can tell the
+  demo path worked, and what the user sees when it fails.
 - Resolve `FEATURE_DIR` with `bash .specify/scripts/bash/check-prerequisites.sh` (use flags the skill requires, e.g. `--require-spec`, `--paths-only`).
-- **Project memory paths** (multi-root workspace — resolve before reading):
+- **Project memory paths** (resolve before reading; this template is one repo):
   - **Constitution** — `<SPECKIT_PROJECT_ROOT>/.specify/memory/constitution.md`
-    - Resolve `SPECKIT_PROJECT_ROOT` from the command's prerequisite/setup script (repo where `specs/` and the active feature live; e.g. `sidekicker-cta`).
-    - Do **not** read from a toolkit-only or unrelated sibling repo in the workspace.
+    - Resolve `SPECKIT_PROJECT_ROOT` from the command's prerequisite/setup script (repo where `specs/` and the active feature live). For this template that is this repository.
+    - Do **not** read from an unrelated sibling repo in the workspace.
   - **Project context** — `<TARGET_REPO_ROOT>/.specify/memory/project-context.md`
-    - Resolve `TARGET_REPO_ROOT` as the **application codebase** where implementation will land or is being documented (e.g. `sidekicker-ui`, `sidekicker-api`).
-    - For `/speckit-specify` and `/speckit-plan` from a spec hub, `TARGET_REPO_ROOT` is usually the UI or API repo — **not** the spec hub — unless specs and code share one repo.
-    - Do **not** read from a toolkit-only or unrelated sibling repo in the workspace.
+    - Resolve `TARGET_REPO_ROOT` as the codebase where implementation will land. Default is this repo.
     - When specs and application code live in the same repo, `TARGET_REPO_ROOT` equals `SPECKIT_PROJECT_ROOT`.
+    - Do **not** read from an unrelated sibling repo in the workspace.
   - **Architecture** — same `TARGET_REPO_ROOT` as project context; discovery order in [`.cursor/rules/references/project-memory-paths.md`](references/project-memory-paths.md).
   - Use `test -f` (or equivalent path probe) on the resolved path before `Read` when a skill treats the file as optional (`IF EXISTS`).
   - Examples: [`.cursor/rules/references/project-memory-paths.md`](references/project-memory-paths.md)

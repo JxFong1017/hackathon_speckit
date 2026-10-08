@@ -1,9 +1,9 @@
 ---
 name: "speckit-update"
-description: "Pull new Spec Kit toolkit changes from the canonical adjacency-speckit repository by comparing every managed file's contents (ignores the project's git remote origin)."
+description: "Pull Spec Kit toolkit changes from SPECKIT_UPDATE_REPO by comparing every managed file's contents. This template has no default upstream."
 compatibility: "Requires spec-kit project structure with .specify/ directory"
 metadata:
-  author: "flex-hiring-and-adjacencies"
+  author: "speckit-template"
   source: ".specify/scripts/bash/speckit-update.sh"
 ---
 
@@ -22,11 +22,11 @@ Supported flags in `$ARGUMENTS` (pass through to the script):
 
 ## Purpose
 
-Sync **toolkit** files (commands, scripts, templates, skills, extensions) from the canonical **adjacency-speckit** source repository into the current workspace.
+Sync **toolkit** files (commands, scripts, templates, skills, extensions) from `SPECKIT_UPDATE_REPO` into the current workspace.
 
-This command **does not** use `git pull`, `git merge`, or the current project's `remote.origin.url`. It always fetches from the canonical **adjacency-speckit** source (`SEEK-Jobs/adjacency-speckit`), overridable only via `SPECKIT_UPDATE_REPO`.
+This command **does not** use `git pull`, `git merge`, or the current project's `remote.origin.url`. There is **no default repository**. If `SPECKIT_UPDATE_REPO` is unset, stop. Do not fetch another team's Spec Kit (that would overwrite this template).
 
-**Repository access order** (mandatory): try **SSH** first (`git@github.com:SEEK-Jobs/adjacency-speckit.git`), then fall back to **HTTPS** (`https://github.com/SEEK-Jobs/adjacency-speckit.git`) if SSH fails. If both fail, stop immediately.
+**Repository access order** when `SPECKIT_UPDATE_REPO` is set: try **SSH** first, then **HTTPS**. If both fail, stop immediately.
 
 ## Mandatory constraints
 
@@ -61,7 +61,8 @@ On **success** (exit 0):
 On **access error** (exit 1, message contains `Cannot access source repository` or `Failed to clone`):
 
 - Stop. Do not modify any files manually.
-- Tell the user to verify GitHub access to `SEEK-Jobs/adjacency-speckit` (SSH key for `git@github.com`, or HTTPS credential if SSH is unavailable) and retry.
+- If the script says `SPECKIT_UPDATE_REPO is not set`, stop. Tell the user this template does not sync until that variable points at this template's own remote.
+- On any other access error, tell the user to verify access to the URL in `SPECKIT_UPDATE_REPO` and retry.
 
 ## What gets synced
 

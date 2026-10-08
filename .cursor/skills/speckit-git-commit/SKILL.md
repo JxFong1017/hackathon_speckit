@@ -37,11 +37,11 @@ When the current branch starts with a JIRA-style prefix, extract it for the scop
 
 ```bash
 git rev-parse --abbrev-ref HEAD
-# info-123-hirer-login-widget → INFO-123
+# proj-123-demo-slice → PROJ-123
 # INFO-456-payment-retry      → INFO-456
 ```
 
-Take the leading JIRA key from the branch prefix (`info-123-hirer-login-widget` → `INFO-123`). Match `^[A-Za-z]+-[0-9]+` at the start of the branch name and uppercase the project key.
+Take the leading ticket key from the branch prefix (`proj-123-demo-slice` → `PROJ-123`). Match `^[A-Za-z]+-[0-9]+` at the start of the branch name and uppercase the project key. Numbered feature branches like `001-feature-name` do not match; omit the scope.
 
 ### Type mapping for Spec Kit events
 
@@ -120,7 +120,7 @@ When no per-event `message` is configured, use this pattern:
 | `after_taskstoissues` | sync tasks to issues             |
 | `before_*`            | save progress before \<command\> |
 
-Example fallback for `after_specify` on branch `info-123-hirer-widget`: `docs(INFO-123): add specification`.
+Example fallback for `after_specify` on branch `001-demo-slice`: `docs: add specification`.
 
 ## Graceful Degradation
 

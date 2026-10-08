@@ -6,7 +6,7 @@ description: "Task list template for feature implementation"
 # Tasks: [FEATURE NAME]
 
 **Input**: Design documents from `/specs/[###-feature-name]/`
-**Prerequisites**: plan.md (required), spec.md (required for user stories), research.md, data-model.md, contracts/, references/design/ (required for UI/UX work), Tracking & Observability Strategy
+**Prerequisites**: plan.md (required), spec.md (required for user stories), research.md, data-model.md, contracts/
 
 **Tests**: The examples below include test tasks. Tests are OPTIONAL - only include them if explicitly requested in the feature specification.
 
@@ -70,9 +70,8 @@ Examples of foundational tasks (adjust based on your project):
 - [ ] T009 Setup environment configuration management
 - [ ] T010 [P] Document privacy/access controls for PII paths (Constitution II) when applicable
 - [ ] T011 [P] Add contract tests for shared APIs/events (Constitution I + plan contracts/)
-- [ ] T012 [P] Verify UI/UX design references exist in specs/[###-feature]/references/design/ and map visible states/copy to implementation tasks (required for UI/UX work)
-- [ ] T013 [P] Verify frontend Hubble tracking decision in plan.md and create event-schema/test tasks if required
-- [ ] T014 [P] Verify backend observability tasks cover logs, metrics, traces, dashboards, alerts, and runbook when backend paths exist
+- [ ] T012 [P] Confirm the P1 demo path is described in spec.md and plan.md before UI or API work
+- [ ] T013 [P] Add a visible failure state for the P1 path (invalid input or dependency error)
 
 **Checkpoint**: Foundation ready - user story implementation can now begin in parallel
 
@@ -160,10 +159,8 @@ Examples of foundational tasks (adjust based on your project):
 - [ ] TXXX Performance optimization across all stories
 - [ ] TXXX [P] Additional unit tests (if requested) in tests/unit/
 - [ ] TXXX Security hardening
-- [ ] TXXX [P] Design-review verification against specs/[###-feature]/references/design/ for UI/UX changes
-- [ ] TXXX [P] Hubble tracking verification for frontend events, or documented not-required/N/A rationale
-- [ ] TXXX [P] Backend observability verification against dashboards/alerts/runbook expectations
-- [ ] TXXX Run quickstart.md validation
+- [ ] TXXX Walk the P1 demo script from quickstart.md on a fresh run
+- [ ] TXXX Confirm no secrets or production data are committed
 
 ---
 
@@ -187,9 +184,7 @@ Examples of foundational tasks (adjust based on your project):
 ### Within Each User Story
 
 - Tests (if included) MUST be written and FAIL before implementation
-- UI/UX design-reference verification MUST happen before implementing visible states or copy
-- Frontend Hubble tracking decision MUST be resolved before implementing frontend analytics hooks
-- Backend observability tasks MUST be present before backend/BFF/integration story implementation
+- The P1 demo path MUST be implementable without tasks that the spec marks out of scope
 - Models before services
 - Services before endpoints
 - Core implementation before integration
@@ -257,9 +252,8 @@ With multiple developers:
 - [Story] label maps task to specific user story for traceability
 - Each user story should be independently completable and testable
 - Verify tests fail before implementing
-- For UI/UX work, verify references/design/ exists and is linked from spec.md/plan.md before building UI
-- For frontend work, verify the Hubble tracking decision is explicit before adding or skipping tracking
-- For backend work, verify Observability Strategy covers service-side tracking before implementation
+- For UI work, follow the experience described in spec.md; use references/design/ only when that folder exists
 - Commit after each task or logical group
+- Stop after the P1 story and run the demo before starting later stories
 - Stop at any checkpoint to validate story independently
 - Avoid: vague tasks, same file conflicts, cross-story dependencies that break independence

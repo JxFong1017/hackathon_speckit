@@ -26,26 +26,21 @@
 **Performance Goals**: [domain-specific, e.g., 1000 req/s, 10k lines/sec, 60 fps or NEEDS CLARIFICATION]  
 **Constraints**: [domain-specific, e.g., <200ms p95, <100MB memory, offline-capable or NEEDS CLARIFICATION]  
 **Scale/Scope**: [domain-specific, e.g., 10k users, 1M LOC, 50 screens or NEEDS CLARIFICATION]
-**Design Reference** *(if UI/UX)*: [`specs/[###-feature]/references/design/` path, Figma/export status, or NEEDS CLARIFICATION]
-**Frontend Hubble Tracking**: [Required / Not required / N/A, with rationale, or NEEDS CLARIFICATION]
-**Backend Observability**: [Logs/metrics/traces/dashboard/alert strategy, owner, or N/A]
+**Design notes** *(if UI)*: [One-paragraph experience from spec.md, optional `references/design/` path, or NEEDS CLARIFICATION]
+**Demo signal**: [How you know the P1 path worked — UI state, log line, or script]
 
 ## Constitution Check
 
 *GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
 
-| Gate (constitution §) | Question | Status |
-|-----------------------|----------|--------|
-| §3 Product | P1 outcome clear; no blocking `[NEEDS CLARIFICATION]` | ☐ |
-| §2 Hirer domain | Bounded contexts, dependencies, contract owners named | ☐ |
-| §4 Architecture | Extends existing patterns; new services justified; no invented APIs | ☐ |
-| §6 Data/privacy | Classification, retention, logging redaction if data touched | ☐ |
-| §7 Rollout | Feature flags, rollback, operational readiness for user-visible change | ☐ |
-| §8 Testing | Unit/contract/integration strategy for domain + external contracts | ☐ |
-| §9 Observability | Logs, metrics, traces, dashboards, alerts per RFC024/025/026 | ☐ |
-| §9 Tracking | Frontend Hubble tracking decision documented; backend tracking covered by Observability Strategy | ☐ |
-| §10 SDD | Spec/plan/tasks traceability; `contracts/` for externals | ☐ |
-| §10 SDD + §3 Product | UI/UX work has `references/design/` evidence or a blocking clarification | ☐ |
+| Gate | Question | Status |
+|------|----------|--------|
+| Demo | P1 outcome is something a person can try; no blocking `[NEEDS CLARIFICATION]` on that path | ☐ |
+| Timebox | Out of scope is explicit; the plan does not depend on deferred work | ☐ |
+| Stack | Language, runtime, and storage are chosen or marked N/A | ☐ |
+| Evidence | No invented APIs, contracts, or UI beyond the spec and files on disk | ☐ |
+| Data | Personal data is called out, or the plan says the demo uses local/fake data | ☐ |
+| Demo signal | Someone can tell the P1 path worked, and what they see when it fails | ☐ |
 
 Mark **Pass**, **Violation** (justify in Complexity Tracking), or **N/A** with rationale.
 
@@ -60,7 +55,7 @@ specs/[###-feature]/
 ├── data-model.md        # Phase 1 output (/speckit-plan command)
 ├── quickstart.md        # Phase 1 output (/speckit-plan command)
 ├── references/
-│   └── design/          # Required for UI/UX work: links, exports, review notes
+│   └── design/          # Optional: links, exports, or notes when the team has them
 ├── contracts/           # Phase 1 output (/speckit-plan command)
 └── tasks.md             # Phase 2 output (/speckit-tasks command - NOT created by /speckit-plan)
 ```
@@ -112,30 +107,20 @@ ios/ or android/
 **Structure Decision**: [Document the selected structure and reference the real
 directories captured above]
 
-## UI/UX Design Alignment *(required when feature includes UI/UX work)*
+## UI notes *(when the feature has a UI)*
 
-- **Design reference path**: [`specs/[###-feature]/references/design/` or N/A - no UI/UX work]
-- **Source of truth**: [Figma URL / exported screens / design review notes / NEEDS CLARIFICATION]
-- **States covered**: [default, loading, error, disabled, empty, success, responsive states as applicable]
-- **Accessibility notes**: [keyboard, focus, labels, screen reader behaviour, contrast]
-- **Braid/Vocab alignment**: [Components/tokens used or exception needing Complexity Tracking]
+- **Experience**: [Same flow as spec.md, in enough detail to build the demo screens]
+- **Design reference path**: [`specs/[###-feature]/references/design/` or N/A]
+- **States to show**: [default, loading, error, empty — only those the demo needs]
+- **Accessibility**: [Labels and keyboard path for demo screens, or a noted gap]
 
-If this section is `NEEDS CLARIFICATION` for a UI/UX feature, stop before Phase 0 research and run
-`/speckit-clarify`.
+If the P1 UI flow is still a `[NEEDS CLARIFICATION]`, stop and run `/speckit-clarify`.
 
-## Tracking & Observability Strategy
+## Demo signal
 
-- **Frontend Hubble decision**: [Required / Not required / N/A]
-- **Frontend Hubble rationale**: [Why this feature does or does not need frontend tracking]
-- **Frontend events** *(if required)*: [Event names, triggers, properties, correlation IDs, PII exclusions]
-- **Backend observability scope**: [Backend/BFF/agent/integration paths in scope or N/A]
-- **Backend logs**: [Structured log fields, correlation/request IDs, redaction rules]
-- **Backend metrics/traces**: [Counters/timers/spans, dimensions, SLO/SLA tie-in]
-- **Dashboards/alerts/runbook**: [Dashboard links or planned paths, alert thresholds, owner]
-
-If frontend Hubble tracking is undecided for a frontend/hirer-visible feature, stop and run
-`/speckit-clarify`. If backend paths exist, do not leave backend observability as optional
-analytics; cover it here.
+- **Success looks like**: [Screen, response, or command output]
+- **Failure looks like**: [Message or log the user can understand]
+- **Secrets**: [None committed; local env only if needed]
 
 ## Complexity Tracking
 
