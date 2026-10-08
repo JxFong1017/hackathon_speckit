@@ -1,0 +1,22 @@
+# Project Context Triage Extension Configuration
+# Copied to .specify/extensions/project-context/project-context-config.yml on install
+
+targets:
+  - sidekicker-ui
+  - sidekicker-api
+  - hirer-graphql-api
+
+triage_all_targets: true
+
+triage_hooks:
+  default: true
+  before_constitution:
+    enabled: true
+  before_specify:
+    enabled: true
+  before_plan:
+    enabled: true
+  before_tasks:
+    enabled: true
+  before_implement:
+    enabled: true

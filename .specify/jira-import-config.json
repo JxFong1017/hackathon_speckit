@@ -1,0 +1,47 @@
+{
+  "config.version": "2.0",
+  "config.project.from.csv": "false",
+  "config.encoding": "UTF-8",
+  "config.file.id": "f9f09d56-96e0-4c96-b1d9-5940cf2f9e81",
+  "config.email.suffix": "@",
+  "config.file.name": "user-stories.csv",
+  "config.field.mappings": {
+    "Summary": {
+      "jira.field": "summary",
+      "userChanged": "true",
+      "manualMapping": "false"
+    },
+    "Issue Type": {
+      "jira.field": "issuetype",
+      "userChanged": "true",
+      "manualMapping": "false"
+    },
+    "Labels": {
+      "jira.field": "labels",
+      "userChanged": "true",
+      "manualMapping": "false"
+    },
+    "Description": {
+      "jira.field": "description",
+      "userChanged": "true",
+      "manualMapping": "false"
+    },
+    "Priority": {
+      "jira.field": "priority",
+      "userChanged": "true",
+      "manualMapping": "false"
+    }
+  },
+  "config.csv.file.id": null,
+  "config.value.mappings": {},
+  "config.delimiter": ",",
+  "config.project": {
+    "project.type": null,
+    "project.key": "INFO",
+    "project.description": null,
+    "project.url": null,
+    "project.name": "Flex Hiring & Adjacency",
+    "project.lead": "712020:73fe08ef-d87e-40cc-8f26-6620410d0140"
+  },
+  "config.date.format": "dd/MMM/yy h:mm a"
+}

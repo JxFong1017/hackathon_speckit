@@ -1,0 +1,63 @@
+schema_version: "1.0"
+
+extension:
+  id: project-context
+  name: "Project Context Triage"
+  version: "1.0.0"
+  description: "Fingerprint-based triage for project-context.md freshness on existing Spec Kit hook events"
+  author: spec-kit-core
+  repository: https://github.com/github/spec-kit
+  license: MIT
+
+requires:
+  speckit_version: ">=0.2.0"
+  tools: []
+
+provides:
+  commands:
+    - name: speckit.project-context.triage
+      file: commands/speckit.project-context.triage.md
+      description: "Triage project-context staleness for target codebase repo(s); warn only — does not auto-regenerate"
+
+  config:
+    - name: "project-context-config.yml"
+      template: "config-template.yml"
+      description: "Target codebase paths and per-hook triage toggles"
+      required: false
+
+hooks:
+  before_constitution:
+    command: speckit.project-context.triage
+    optional: true
+    prompt: "Check project-context freshness before constitution?"
+    description: "Triage project-context before constitution (brownfield onboarding)"
+  before_specify:
+    command: speckit.project-context.triage
+    optional: true
+    prompt: "Check project-context freshness before specification?"
+    description: "Triage project-context before specification"
+  before_plan:
+    command: speckit.project-context.triage
+    optional: true
+    prompt: "Check project-context freshness before planning?"
+    description: "Triage project-context before implementation planning"
+  before_tasks:
+    command: speckit.project-context.triage
+    optional: true
+    prompt: "Check project-context freshness before task generation?"
+    description: "Triage project-context before task generation"
+  before_implement:
+    command: speckit.project-context.triage
+    optional: true
+    prompt: "Check project-context freshness before implementation?"
+    description: "Triage project-context before implementation"
+
+tags:
+  - "project-context"
+  - "triage"
+  - "brownfield"
+
+config:
+  defaults:
+    triage_hooks:
+      default: true

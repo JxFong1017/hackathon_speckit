@@ -1,0 +1,7 @@
+{
+  "csv_columns": ["Issue Type", "Summary", "Description", "Labels", "Priority"],
+  "defaults": {
+    "Issue Type": "Story",
+    "Labels": "Sidekicker"
+  }
+}

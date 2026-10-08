@@ -1,0 +1,30 @@
+# Project Context Triage Extension Configuration
+# Copied to .specify/extensions/project-context/project-context-config.yml on install
+
+# Codebase repo folder names or paths where project-context.md lives.
+# Resolved in order: absolute path → relative to SPECKIT_PROJECT_ROOT → workspace sibling
+# (parent directory of the Spec Kit project, e.g. sidekicker-ui next to sidekicker-cta).
+#
+# Examples (multi-root workspace):
+#   targets:
+#     - sidekicker-ui
+#     - sidekicker-api
+targets: []
+
+# When true, run triage for every target listed above. When false, only the first resolvable target.
+triage_all_targets: true
+
+# Per-hook triage toggles (existing Spec Kit events only).
+# Set "default" to enable for all hooked events, then override per-event.
+triage_hooks:
+  default: true
+  before_constitution:
+    enabled: true
+  before_specify:
+    enabled: true
+  before_plan:
+    enabled: true
+  before_tasks:
+    enabled: true
+  before_implement:
+    enabled: true
