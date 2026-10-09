@@ -27,7 +27,7 @@ Do not invent screens, copy, or a visual system. Do not call the Glean agent. Th
 
 1. **Load the PRD**
    - If `$ARGUMENTS` includes a path under `docs/prd/`, use that file.
-   - Otherwise use the only `docs/prd/*.md` whose `**Status**:` is `Ready`, ignoring files whose name ends in `-design-prompt.md`.
+   - Otherwise use the only `docs/prd/*.md` whose `**Status**:` is `Ready`, ignoring files whose name ends in `-design-prompt.md` or `-validation.md`.
    - If several Ready PRDs exist and none is named, ask which path to use.
    - If the chosen file is `Draft`, or none is Ready, stop and tell the user to finish `/speckit-prd`.
 

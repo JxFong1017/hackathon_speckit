@@ -1,6 +1,7 @@
 <!-- Sync Impact Report
-Version change: (none) → 1.0.0
-Initial ratification. No prior constitution file existed.
+Version change: 1.0.0 → 1.0.1
+Patch: optional `/speckit-validate` may run on a Draft PRD. It does not change the PRD unless the user accepts a suggestion.
+Initial ratification remains 1.0.0 on 2026-10-09.
 Modified principles: none (first adoption)
   I. Demo-first
   II. Timebox
@@ -51,11 +52,13 @@ Generated specs, plans, and tasks MUST NOT invent architecture, APIs, contracts,
 
 Company context (Glean, Atlassian, Backstage, GitHub, and the RFC skill) MUST be used only when that connector or skill is available in the session. A search with no match MUST stay an open question. It is not evidence that the thing does not exist. An ADOPTED RFC that applies MUST be cited. A DEPRECATED RFC MUST NOT be treated as a constraint.
 
+`/speckit-validate` is optional. It runs on a Draft PRD and MUST NOT change that PRD unless the user accepts a suggestion. A search with no match is not proof the idea is new.
+
 `/speckit-design-prompt` is optional. It MUST NOT invent screens. Fidelity and SEEK Braid are choices recorded in the PRD, not assumptions.
 
 ## Spec Kit workflow
 
-The required order is `/speckit-constitution`, `/speckit-prd`, `/speckit-specify`, `/speckit-plan`, `/speckit-tasks`, then `/speckit-implement`. `/speckit-design-prompt` MAY run after the PRD is Ready, and again after the spec exists.
+The required order is `/speckit-constitution`, `/speckit-prd`, `/speckit-specify`, `/speckit-plan`, `/speckit-tasks`, then `/speckit-implement`. `/speckit-validate` MAY run after the PRD is drafted and before it is marked Ready. `/speckit-design-prompt` MAY run after the PRD is Ready, and again after the spec exists.
 
 The plan Constitution Check MUST pass, or each violation MUST be justified, before research. Stack, libraries, and file layout belong in the plan. Product questions belong in the PRD. Behaviour and acceptance belong in the spec.
 
@@ -71,7 +74,7 @@ The plan Constitution Check is the compliance review before implementation. Corr
 
 **Owner:** the team using this repository.
 
-**Version**: 1.0.0 | **Ratified**: 2026-10-09 | **Last Amended**: 2026-10-09
+**Version**: 1.0.1 | **Ratified**: 2026-10-09 | **Last Amended**: 2026-10-09
 
 ---
 

@@ -22,9 +22,10 @@ Write or update one product requirements document under `docs/prd/`. Ask only th
 This command runs before `/speckit-specify`. Stack, libraries, and file layout belong in `/speckit-plan`. Behaviour, data, and acceptance details belong in `/speckit-clarify` after a spec exists.
 
 1. **Resolve the file**
-   - If `$ARGUMENTS` includes a path to an existing `docs/prd/*.md`, update that file.
+   - Ignore files whose names end in `-validation.md` or `-design-prompt.md`.
+   - If `$ARGUMENTS` includes a path to an existing `docs/prd/*.md` PRD, update that file.
    - Otherwise derive a 2–4 word kebab-case name from the idea (action-noun when possible, keep acronyms). Target path: `docs/prd/<name>.md`.
-   - If that path does not exist, search `docs/prd/*.md`. When exactly one file is clearly the same product as the new message, update it. When several could match and the message names none, ask which path to update. That question does not count toward the five-question cap.
+   - If that path does not exist, search `docs/prd/*.md`, still ignoring validation and design-prompt files. When exactly one file is clearly the same product as the new message, update it. When several could match and the message names none, ask which path to update. That question does not count toward the five-question cap.
    - When no file matches, create one. `mkdir -p docs/prd` and copy `.specify/templates/prd-template.md`.
 
 2. **Load context**
@@ -89,7 +90,9 @@ This command runs before `/speckit-specify`. Stack, libraries, and file layout b
 
 8. **Set status**
 
-   Set **Status** to `Ready` when Problem, Who it is for, Outcome, and Out of scope each contain concrete text. Otherwise leave `Draft`.
+   Leave **Status** as `Draft` when Problem, Who it is for, Outcome, or Out of scope is still empty.
+
+   When those four sections contain concrete text, keep **Status** as `Draft` so `/speckit-validate` can suggest refinements. Set **Status** to `Ready` only when the user says "ready", "mark ready", or "skip validation" and those four sections are filled.
 
    Unanswered topics go under Open questions. Do not fill them with a guess. Assumptions hold defaults the user did not contradict.
 
@@ -99,8 +102,9 @@ This command runs before `/speckit-specify`. Stack, libraries, and file layout b
    - Sources used, and which connected-context sources were skipped because they were not available
    - Questions answered (count)
    - Sections still open, if any
+   - When the four blocking sections are filled and status is Draft, the optional next command is `/speckit-validate`. The user can instead say "mark ready".
    - When status is Ready, the next command is `/speckit-specify` with that PRD path. If this version has a UI, also offer `/speckit-design-prompt` for a Riz mock-up prompt.
-   - When status is Draft, say which of the four blocking sections are still empty
+   - When a blocking section is empty, name it.
 
 ## RFC skill
 
