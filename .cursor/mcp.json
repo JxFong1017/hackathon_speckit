@@ -1,0 +1,20 @@
+{
+  "mcpServers": {
+    "seek-glean-mcp": {
+      "type": "http",
+      "url": "https://seek-be.glean.com/mcp/default"
+    },
+    "seek-atlassian-mcp": {
+      "type": "http",
+      "url": "https://aips-mcp-gateway.cloud.seek.com.au/atlassian/mcp"
+    },
+    "seek-backstage-mcp": {
+      "type": "http",
+      "url": "https://aips-mcp-gateway.cloud.seek.com.au/backstage/mcp"
+    },
+    "seek-github-mcp": {
+      "type": "http",
+      "url": "https://aips-mcp-gateway.cloud.seek.com.au/github/mcp"
+    }
+  }
+}

@@ -18,6 +18,7 @@ For stack, commands, and structure: read the active feature's `plan.md` and `qui
   - **IF EXISTS only** — never invent architecture content.
   - **Precedence**: architecture doc = intended structure for new/changed code; existing-on-disk still governs contracts/APIs/feature artifacts.
   - **Conflicts**: if architecture doc and current tree disagree, follow architecture for greenfield paths; note drift in plan/research; do not silently invent a third layout.
+- When the active feature's `spec.md` has a `**PRD**:` line, load that file under `docs/prd/`. Treat its Out of scope list as binding in the spec, plan, and tasks.
 - For UI work, describe the intended experience in `spec.md`. Files under
   `specs/<feature>/references/design/` are optional. Do not invent layout, copy, or
   interaction states the team did not describe. If the UI is too vague to build the demo,
