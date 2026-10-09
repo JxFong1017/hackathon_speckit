@@ -8,6 +8,7 @@ Generic [Spec Kit](https://github.com/github/spec-kit) starter. Copy this repo, 
 
 - [Quickstart](#quickstart)
 - [Workflow](#workflow)
+- [Skills](#skills)
 - [Commands](#commands)
 - [What this template leaves open](#what-this-template-leaves-open)
 - [Git extension](#git-extension)
@@ -33,40 +34,73 @@ flowchart LR
   SP --> PL["/speckit-plan"]
   PL --> TK["/speckit-tasks"]
   TK --> IM["/speckit-implement"]
+  PRD -.-> DP["/speckit-design-prompt\n(optional)"]
+  SP -.-> DP
 ```
 
-| Step | Command                 | What to produce                                                                                                                                            |
-| ---- | ----------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 1    | `/speckit-constitution` | Short principles: demo-first, timeboxed scope, one stack, no secrets                                                                                       |
-| 2    | `/speckit-prd`          | `docs/prd/<name>.md`. Uses connected Glean, Confluence, Backstage, GitHub, and the RFC skill when they are available. Up to 5 questions, then status Ready |
-| 3    | `/speckit-specify`      | One feature from that PRD: problem, P1 user journey, success = a demo                                                                                      |
-| 4    | `/speckit-plan`         | Stack, layout, and the smallest design that can be shown                                                                                                   |
-| 5    | `/speckit-tasks`        | Ordered tasks, P1 first                                                                                                                                    |
-| 6    | `/speckit-implement`    | Build on the feature branch. Stop after P1 and check the demo path                                                                                         |
+A solid arrow is a required step. A dotted arrow is optional. `/speckit-design-prompt` can run once the PRD is Ready, or again after `/speckit-specify` so the prompt includes the P1 journey.
 
-Optional when the spec is fuzzy or time allows: `/speckit-clarify`, `/speckit-userstories`, `/speckit-checklist`, `/speckit-analyze`.
+| Step | Command                 | What to produce                                                                                                            |
+| ---- | ----------------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| 1    | `/speckit-constitution` | [`.specify/memory/constitution.md`](./.specify/memory/constitution.md). Demo-first, timeboxed scope, one stack, no secrets |
+| 2    | `/speckit-prd`          | `docs/prd/<name>.md`. Up to 5 questions, then status Ready. Details in [PRD skill](#speckit-prd).                          |
+| 3    | `/speckit-specify`      | One feature from that PRD: problem, P1 user journey, success = a demo                                                      |
+| 4    | `/speckit-plan`         | Stack, layout, and the smallest design that can be shown                                                                   |
+| 5    | `/speckit-tasks`        | Ordered tasks, P1 first                                                                                                    |
+| 6    | `/speckit-implement`    | Build on the feature branch. Stop after P1 and check the demo path                                                         |
 
-When the Ready PRD has a UI, `/speckit-design-prompt` writes a first message for the Glean agent [Riz](https://app.glean.com/chat/agents/22117631045e431c8009940e14719ff8). Paste that message into a new Riz chat.
+Optional when the spec is fuzzy or time allows: `/speckit-clarify`, `/speckit-userstories`, `/speckit-checklist`, `/speckit-analyze`. For a UI mock-up, `/speckit-design-prompt` is also optional. See [Skills](#skills).
 
 If requirements change after implementation has started, update the spec, then run `/speckit-implement` again with the change. Run `/speckit-analyze` when you want the spec, plan, and tasks checked against each other.
+
+## Skills
+
+### `/speckit-prd`
+
+Skill: [`.cursor/skills/speckit-prd/SKILL.md`](./.cursor/skills/speckit-prd/SKILL.md). Template: [`.specify/templates/prd-template.md`](./.specify/templates/prd-template.md).
+
+Run it with a short idea. It writes `docs/prd/<name>.md`, shows the draft, then asks one product question at a time, at most five. Status becomes **Ready** when the problem, audience, outcome, and out-of-scope list are filled in. `/speckit-specify` uses a Ready PRD as the source for those sections and will not add behaviour the PRD marked out of scope.
+
+Before the draft, the skill looks up company context that is actually connected in this session. A missing connector is skipped and named in the completion report.
+
+| Source    | Used for                                                                                         |
+| --------- | ------------------------------------------------------------------------------------------------ |
+| Glean     | Docs about the product or system you named. People search only when the question is who owns it. |
+| Atlassian | Confluence and Jira. A page is opened only when search returned it.                              |
+| Backstage | The system or service you named, and its owning component.                                       |
+| GitHub    | A repo you named, or one a result linked.                                                        |
+| RFC skill | Auth, secrets, logging, monitoring, personal data, privacy, CI, localisation, or a named RFC.    |
+
+The RFC skill is the SEEK plugin on each person's Cursor account. It is not in this repo. When that plugin is missing, the PRD skill loads the RFC through Backstage `list-rfcs` and `get-rfc` if Backstage is connected. If neither is available, it records an open question and does not invent the RFC text. Adopted RFCs are cited under **Already decided** and **Sources**.
+
+Connectors are declared in [`.cursor/mcp.json`](./.cursor/mcp.json). Opening the repo asks each person to sign in with their own account.
+
+### `/speckit-design-prompt` (optional)
+
+Skill: [`.cursor/skills/speckit-design-prompt/SKILL.md`](./.cursor/skills/speckit-design-prompt/SKILL.md).
+
+Use this when the Ready PRD has a UI and you want a mock-up before or after the spec. It does not call Glean. It writes `docs/prd/<name>-design-prompt.md` and prints the same text in chat for you to paste as the first message to [Riz – UI/UX Mock-up Partner](https://app.glean.com/chat/agents/22117631045e431c8009940e14719ff8).
+
+If a spec already points at that PRD, the prompt uses the P1 journey. The skill asks two questions only when the PRD has not answered them: fidelity (low is the recommendation) and whether to use SEEK Braid. It does not invent screens. After Riz returns screens, save them under `specs/<feature>/references/design/`.
 
 ## Commands
 
 ### Default path
 
-| Command                  | Purpose                                                                            |
-| ------------------------ | ---------------------------------------------------------------------------------- |
-| `/speckit-constitution`  | Create or update `.specify/memory/constitution.md`                                 |
-| `/speckit-prd`           | Draft `docs/prd/<name>.md` by asking up to 5 product questions, then mark it Ready |
-| `/speckit-design-prompt` | Write a copy-paste mock-up prompt for the Glean agent Riz from a Ready PRD         |
-| `/speckit-specify`       | Create or update `specs/[###-feature]/spec.md` from a Ready PRD or a description   |
-| `/speckit-plan`          | Produce `plan.md`, `research.md`, `data-model.md`, `contracts/`, `quickstart.md`   |
-| `/speckit-tasks`         | Generate dependency-ordered `tasks.md`                                             |
-| `/speckit-implement`     | Build tasks on the current feature branch, P1 demo slice first                     |
-| `/speckit-clarify`       | Resolve underspecified areas (up to 5 questions)                                   |
-| `/speckit-userstories`   | Expand `user-stories.md` from `spec.md`                                            |
-| `/speckit-checklist`     | Requirements-quality checklist                                                     |
-| `/speckit-analyze`       | Cross-check spec, plan, and tasks                                                  |
+| Command                 | Purpose                                                                                                            |
+| ----------------------- | ------------------------------------------------------------------------------------------------------------------ |
+| `/speckit-constitution` | Create or update `.specify/memory/constitution.md`                                                                 |
+| `/speckit-prd`          | Draft `docs/prd/<name>.md` by asking up to 5 product questions, then mark it Ready. See [PRD skill](#speckit-prd). |
+| `/speckit-specify`      | Create or update `specs/[###-feature]/spec.md` from a Ready PRD or a description                                   |
+| `/speckit-plan`         | Produce `plan.md`, `research.md`, `data-model.md`, `contracts/`, `quickstart.md`                                   |
+| `/speckit-tasks`        | Generate dependency-ordered `tasks.md`                                                                             |
+| `/speckit-implement`    | Build tasks on the current feature branch, P1 demo slice first                                                     |
+| `/speckit-clarify`      | Resolve underspecified areas (up to 5 questions)                                                                   |
+| `/speckit-userstories`  | Expand `user-stories.md` from `spec.md`                                                                            |
+| `/speckit-checklist`    | Requirements-quality checklist                                                                                     |
+| `/speckit-analyze`      | Cross-check spec, plan, and tasks                                                                                  |
+
+`/speckit-design-prompt` is optional. See [Design prompt](#speckit-design-prompt-optional).
 
 Skill files for each command live under [`.cursor/skills/`](./.cursor/skills/).
 
