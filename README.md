@@ -81,14 +81,15 @@ Connectors are declared in [`.cursor/mcp.json`](./.cursor/mcp.json). Opening the
 
 Skill: [`.cursor/skills/speckit-validate/SKILL.md`](./.cursor/skills/speckit-validate/SKILL.md).
 
-Run it after `/speckit-prd` has a Draft with a problem, an audience, an outcome, and an out-of-scope list. It writes `docs/prd/<name>-validation.md` and does not change the PRD until you accept a suggestion.
+Run it after `/speckit-prd` has a Draft with a problem, an audience, an outcome, and an out-of-scope list. It writes `docs/prd/<name>-validation.md` and does not change the PRD until you accept a suggestion. It checks whether the idea is feasible for that audience. It does not review engineering standards.
 
-| Check            | What it looks for                                                                                                                                              |
-| ---------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Already exists   | A product, spec, system, or ticket in Glean, Confluence, Jira, or Backstage that already does this. GitHub only when a repo is named or linked.                |
-| Feasible in SEEK | An adopted RFC, the Backstage owner, or a Confluence or Glean page that states a platform or data limit. A Databricks page counts. A warehouse is not queried. |
+| Check        | What it looks for                                                                                                                                                                                                     |
+| ------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Demand       | Research, interviews, surveys, or stated customer pain that this audience has the problem and wants the outcome.                                                                                                      |
+| Alternatives | A product, process, or workaround that already delivers this outcome to this audience. A result that only shares a keyword is recorded as a different offer.                                                          |
+| Blockers     | A market, policy, data, or platform limit that makes the outcome impossible or forces a smaller one. A Databricks page counts. A warehouse is not queried. An RFC counts only when a source says it blocks the offer. |
 
-The verdict is **Proceed**, **Proceed with constraints**, or **Overlaps**. Each suggestion names the PRD section to edit and a source URL. Accepting one updates that section and leaves the status as Draft. Saying "none" leaves the PRD unchanged. The RFC skill is still the SEEK plugin, with Backstage `list-rfcs` and `get-rfc` as the fallback.
+The verdict is **Feasible**, **Feasible with limits**, **Unproven**, **Already served**, or **Not feasible**. Each suggestion names the PRD section to edit and a source URL, and it must change what the audience can try. Accepting one updates that section and leaves the status as Draft. Saying "none" leaves the PRD unchanged.
 
 ### `/speckit-design-prompt` (optional)
 
