@@ -38,20 +38,23 @@ flowchart LR
   VAL -.-> PRD
   PRD -.-> DP["/speckit-design-prompt\n(optional)"]
   SP -.-> DP
+  SP -.-> CL["/speckit-clarify\n(optional)"]
+  CL -.-> PL
 ```
 
-A solid arrow is a required step. A dotted arrow is optional. `/speckit-validate` runs after a Draft PRD and can send accepted edits back. `/speckit-design-prompt` can run once the PRD is Ready, or again after `/speckit-specify` so the prompt includes the P1 journey.
+A solid arrow is a required step. A dotted arrow is optional. `/speckit-validate` runs after a Draft PRD and can send accepted edits back. `/speckit-clarify` runs after `/speckit-specify` when the spec still has gaps, and writes the answers back into the spec before `/speckit-plan`. `/speckit-design-prompt` can run once the PRD is Ready, or again after `/speckit-specify` so the prompt includes the P1 journey.
 
 | Step | Command                 | What to produce                                                                                                            |
 | ---- | ----------------------- | -------------------------------------------------------------------------------------------------------------------------- |
 | 1    | `/speckit-constitution` | [`.specify/memory/constitution.md`](./.specify/memory/constitution.md). Demo-first, timeboxed scope, one stack, no secrets |
 | 2    | `/speckit-prd`          | `docs/prd/<name>/<name>.md`. Up to 5 questions. Stays Draft until you mark it Ready. Details in [PRD skill](#speckit-prd). |
 | 3    | `/speckit-specify`      | One feature from that PRD: problem, P1 user journey, success = a demo                                                      |
-| 4    | `/speckit-plan`         | Stack, layout, and the smallest design that can be shown                                                                   |
-| 5    | `/speckit-tasks`        | Ordered tasks, P1 first                                                                                                    |
-| 6    | `/speckit-implement`    | Build on the feature branch. Stop after P1 and check the demo path                                                         |
+| 4    | `/speckit-clarify`      | Optional. Up to 5 questions on gaps in the spec. Answers are written back into `spec.md`                                   |
+| 5    | `/speckit-plan`         | Stack, layout, and the smallest design that can be shown                                                                   |
+| 6    | `/speckit-tasks`        | Ordered tasks, P1 first                                                                                                    |
+| 7    | `/speckit-implement`    | Build on the feature branch. Stop after P1 and check the demo path                                                         |
 
-Optional when the spec is fuzzy or time allows: `/speckit-clarify`, `/speckit-userstories`, `/speckit-checklist`, `/speckit-analyze`. After a Draft PRD, `/speckit-validate` is optional. For a UI mock-up, `/speckit-design-prompt` is optional. See [Skills](#skills).
+Optional when the spec is fuzzy or time allows: `/speckit-userstories`, `/speckit-checklist`, `/speckit-analyze`. After a Draft PRD, `/speckit-validate` is optional. For a UI mock-up, `/speckit-design-prompt` is optional. See [Skills](#skills).
 
 If requirements change after implementation has started, update the spec, then run `/speckit-implement` again with the change. Run `/speckit-analyze` when you want the spec, plan, and tasks checked against each other.
 
