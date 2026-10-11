@@ -39,9 +39,9 @@ description: "Task list for transfer talent contracts"
 
 **⚠️ CRITICAL**: No user story work can begin until this phase is complete
 
-- [ ] T004 [P] Wrap the page in `BraidProvider` with the `seekJobs` theme and the Seek Sans stylesheet in `app/src/render.tsx`
-- [ ] T005 [P] Hydrate the page from `app/src/client.tsx`
-- [ ] T006 [P] Add employers `employer-north`, `employer-harbour`, and `employer-brightpath`, plus contract `contract-roster` with label `Roster cover contract`, in `app/src/demo-data.ts`. Store no person name, contact details, or documents
+- [X] T004 [P] Wrap the page in `BraidProvider` with the `seekJobs` theme and the Seek Sans stylesheet in `app/src/render.tsx`
+- [X] T005 [P] Hydrate the page from `app/src/client.tsx`
+- [X] T006 [P] Add employers `employer-north`, `employer-harbour`, and `employer-brightpath`, plus contract `contract-roster` with label `Roster cover contract`, in `app/src/demo-data.ts`. Store no person name, contact details, or documents
 
 **Checkpoint**: `sku start` from `app/` shows a Braid page. The story is not on it yet.
 
