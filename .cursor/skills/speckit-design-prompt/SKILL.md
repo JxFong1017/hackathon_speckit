@@ -26,8 +26,9 @@ Riz is a chat agent. It designs mock-ups from the first message. If fidelity, SE
 Do not invent screens, copy, or a visual system. Do not call the Glean agent. The deliverable is text the user pastes.
 
 1. **Load the PRD**
-   - If `$ARGUMENTS` includes a path under `docs/prd/`, use that file.
-   - Otherwise use the only `docs/prd/*.md` whose `**Status**:` is `Ready`, ignoring files whose name ends in `-design-prompt.md` or `-validation.md`.
+   - A PRD is `docs/prd/<name>/<name>.md`. Ignore files whose names end in `-design-prompt.md` or `-validation.md`, and ignore any other markdown in the folder.
+   - If `$ARGUMENTS` includes a path to an existing PRD, use that file.
+   - Otherwise use the only `docs/prd/<name>/<name>.md` whose `**Status**:` is `Ready`.
    - If several Ready PRDs exist and none is named, ask which path to use.
    - If the chosen file is `Draft`, or none is Ready, stop and tell the user to finish `/speckit-prd`.
 
@@ -45,7 +46,7 @@ Do not invent screens, copy, or a visual system. Do not call the Glean agent. Th
 
 4. **Write the prompt file**
 
-   Save `docs/prd/<prd-name>-design-prompt.md`. `<prd-name>` is the PRD filename without `.md`.
+   Save `docs/prd/<name>/<name>-design-prompt.md`, in the same folder as the PRD. `<name>` is the PRD folder name.
 
    The file contains the agent URL, the PRD path, today's date, and the paste block. The paste block uses this shape, with only facts from the PRD, the spec, and the two answers above:
 

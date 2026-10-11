@@ -23,9 +23,9 @@ This is not an engineering standards review. Do not fetch logging, authenticatio
 
 1. **Load the PRD**
 
-   Ignore files whose names end in `-validation.md` or `-design-prompt.md`.
-   - If `$ARGUMENTS` includes a `docs/prd/*.md` path, use that file.
-   - Otherwise use the only remaining `docs/prd/*.md`. If several remain, ask which path to check.
+   A PRD is `docs/prd/<name>/<name>.md`. Ignore files whose names end in `-validation.md` or `-design-prompt.md`, and ignore any other markdown in the folder.
+   - If `$ARGUMENTS` includes a path to an existing PRD, use that file.
+   - Otherwise use the only remaining `docs/prd/<name>/<name>.md`. If several remain, ask which path to check.
    - If Problem, Who it is for, Outcome, or Out of scope is still a placeholder, stop and tell the user to finish `/speckit-prd`.
    - If `$ARGUMENTS` asks a market question, such as whether the idea has value for the audience, answer that question in the report from the checks below.
 
@@ -45,7 +45,7 @@ This is not an engineering standards review. Do not fetch logging, authenticatio
 
 3. **Write the report**
 
-   Save `docs/prd/<prd-name>-validation.md`. `<prd-name>` is the PRD filename without `.md`.
+   Save `docs/prd/<name>/<name>-validation.md`, in the same folder as the PRD. `<name>` is the PRD folder name.
 
    Lead with the market answer in one or two sentences. Then set **Verdict** to one of:
 

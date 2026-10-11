@@ -117,11 +117,11 @@ Given that feature description, do this:
 - **Project context** — **IF EXISTS**: Read for codebase grounding (actors, modules, integrations, data entities, constraints) — prefer Verified rows; treat Inferred/Unknown as tentative
 - **Architecture** — **IF EXISTS**: Resolve under the same `TARGET_REPO_ROOT` as project context (discovery order in `.cursor/rules/references/project-memory-paths.md`). Fold layer/structure constraints into scope, Assumptions, and any structure-related requirements. Do **not** invent UI/API design beyond the doc; if absent, skip without inventing architecture.
 
-4c. **Load a PRD when one is in play** (`docs/prd/*.md`):
+4c. **Load a PRD when one is in play** (`docs/prd/<name>/<name>.md`):
 
-1.  Ignore files whose names end in `-validation.md` or `-design-prompt.md`.
+1.  A PRD is the file whose name matches its folder. Ignore files whose names end in `-validation.md` or `-design-prompt.md`, and ignore any other markdown in the folder.
 2.  If `$ARGUMENTS` includes a path to an existing PRD under `docs/prd/`, use that file. If the path is a validation or design-prompt file, stop and ask for the PRD path.
-3.  Otherwise list `docs/prd/*.md` (skip the directory when it is missing), still ignoring validation and design-prompt files.
+3.  Otherwise list `docs/prd/*/<name>.md` (skip `docs/prd/` when it is missing). Keep only the file named the same as its folder.
 4.  If exactly one file has `**Status**: Ready`, use it. The feature description is that PRD plus any extra words in `$ARGUMENTS`.
 5.  If several files are Ready and the arguments name none of them, stop and ask which path to use. Do not write a spec yet.
 6.  If the chosen file is `Draft`, stop and tell the user to finish `/speckit-prd` on that file. When the four blocking sections are filled, they can run `/speckit-validate` or say "mark ready".

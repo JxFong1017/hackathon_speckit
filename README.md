@@ -2,7 +2,7 @@
 
 Generic [Spec Kit](https://github.com/github/spec-kit) starter. Copy this repo, describe the idea, and run a short spec → plan → build loop in Cursor. The stack, domain, and extra reference material are filled in when a team uses the template.
 
-`/speckit-prd` writes product briefs under `docs/prd/`. Other reference docs that Spec Kit should read can be added on this repo later.
+`/speckit-prd` writes each product brief in its own folder, `docs/prd/<name>/`. Other reference docs that Spec Kit should read can be added on this repo later.
 
 ## On this page
 
@@ -45,7 +45,7 @@ A solid arrow is a required step. A dotted arrow is optional. `/speckit-validate
 | Step | Command                 | What to produce                                                                                                            |
 | ---- | ----------------------- | -------------------------------------------------------------------------------------------------------------------------- |
 | 1    | `/speckit-constitution` | [`.specify/memory/constitution.md`](./.specify/memory/constitution.md). Demo-first, timeboxed scope, one stack, no secrets |
-| 2    | `/speckit-prd`          | `docs/prd/<name>.md`. Up to 5 questions. Stays Draft until you mark it Ready. Details in [PRD skill](#speckit-prd).        |
+| 2    | `/speckit-prd`          | `docs/prd/<name>/<name>.md`. Up to 5 questions. Stays Draft until you mark it Ready. Details in [PRD skill](#speckit-prd). |
 | 3    | `/speckit-specify`      | One feature from that PRD: problem, P1 user journey, success = a demo                                                      |
 | 4    | `/speckit-plan`         | Stack, layout, and the smallest design that can be shown                                                                   |
 | 5    | `/speckit-tasks`        | Ordered tasks, P1 first                                                                                                    |
@@ -61,7 +61,7 @@ If requirements change after implementation has started, update the spec, then r
 
 Skill: [`.cursor/skills/speckit-prd/SKILL.md`](./.cursor/skills/speckit-prd/SKILL.md). Template: [`.specify/templates/prd-template.md`](./.specify/templates/prd-template.md).
 
-Run it with a short idea. It writes `docs/prd/<name>.md`, shows the draft, then asks one product question at a time, at most five. Status stays **Draft** after those sections are filled. Say "mark ready" to set **Ready**, or run `/speckit-validate` first. `/speckit-specify` uses a Ready PRD as the source for those sections and will not add behaviour the PRD marked out of scope.
+Run it with a short idea. It writes `docs/prd/<name>/<name>.md`, shows the draft, then asks one product question at a time, at most five. Each brief stays in that folder, so a later brief does not sit beside it. Status stays **Draft** after those sections are filled. Say "mark ready" to set **Ready**, or run `/speckit-validate` first. `/speckit-specify` uses a Ready PRD as the source for those sections and will not add behaviour the PRD marked out of scope.
 
 Before the draft, the skill looks up company context that is actually connected in this session. A missing connector is skipped and named in the completion report.
 
@@ -81,7 +81,7 @@ Connectors are declared in [`.cursor/mcp.json`](./.cursor/mcp.json). Opening the
 
 Skill: [`.cursor/skills/speckit-validate/SKILL.md`](./.cursor/skills/speckit-validate/SKILL.md).
 
-Run it after `/speckit-prd` has a Draft with a problem, an audience, an outcome, and an out-of-scope list. It writes `docs/prd/<name>-validation.md` and does not change the PRD until you accept a suggestion. It checks whether the idea is feasible for that audience. It does not review engineering standards.
+Run it after `/speckit-prd` has a Draft with a problem, an audience, an outcome, and an out-of-scope list. It writes `docs/prd/<name>/<name>-validation.md` and does not change the PRD until you accept a suggestion. It checks whether the idea is feasible for that audience. It does not review engineering standards.
 
 | Check        | What it looks for                                                                                                                                                                                                     |
 | ------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -95,7 +95,7 @@ The verdict is **Feasible**, **Feasible with limits**, **Unproven**, **Already s
 
 Skill: [`.cursor/skills/speckit-design-prompt/SKILL.md`](./.cursor/skills/speckit-design-prompt/SKILL.md).
 
-Use this when the Ready PRD has a UI and you want a mock-up before or after the spec. It does not call Glean. It writes `docs/prd/<name>-design-prompt.md` and prints the same text in chat for you to paste as the first message to [Riz – UI/UX Mock-up Partner](https://app.glean.com/chat/agents/22117631045e431c8009940e14719ff8).
+Use this when the Ready PRD has a UI and you want a mock-up before or after the spec. It does not call Glean. It writes `docs/prd/<name>/<name>-design-prompt.md` and prints the same text in chat for you to paste as the first message to [Riz – UI/UX Mock-up Partner](https://app.glean.com/chat/agents/22117631045e431c8009940e14719ff8).
 
 If a spec already points at that PRD, the prompt uses the P1 journey. The skill asks two questions only when the PRD has not answered them: fidelity (low is the recommendation) and whether to use SEEK Braid. It does not invent screens. After Riz returns screens, save them under `specs/<feature>/references/design/`.
 
@@ -103,18 +103,18 @@ If a spec already points at that PRD, the prompt uses the P1 journey. The skill 
 
 ### Default path
 
-| Command                 | Purpose                                                                                                                             |
-| ----------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
-| `/speckit-constitution` | Create or update `.specify/memory/constitution.md`                                                                                  |
-| `/speckit-prd`          | Draft `docs/prd/<name>.md` by asking up to 5 product questions. Stays Draft until you mark it Ready. See [PRD skill](#speckit-prd). |
-| `/speckit-specify`      | Create or update `specs/[###-feature]/spec.md` from a Ready PRD or a description                                                    |
-| `/speckit-plan`         | Produce `plan.md`, `research.md`, `data-model.md`, `contracts/`, `quickstart.md`                                                    |
-| `/speckit-tasks`        | Generate dependency-ordered `tasks.md`                                                                                              |
-| `/speckit-implement`    | Build tasks on the current feature branch, P1 demo slice first                                                                      |
-| `/speckit-clarify`      | Resolve underspecified areas (up to 5 questions)                                                                                    |
-| `/speckit-userstories`  | Expand `user-stories.md` from `spec.md`                                                                                             |
-| `/speckit-checklist`    | Requirements-quality checklist                                                                                                      |
-| `/speckit-analyze`      | Cross-check spec, plan, and tasks                                                                                                   |
+| Command                 | Purpose                                                                                                                                    |
+| ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| `/speckit-constitution` | Create or update `.specify/memory/constitution.md`                                                                                         |
+| `/speckit-prd`          | Draft `docs/prd/<name>/<name>.md` by asking up to 5 product questions. Stays Draft until you mark it Ready. See [PRD skill](#speckit-prd). |
+| `/speckit-specify`      | Create or update `specs/[###-feature]/spec.md` from a Ready PRD or a description                                                           |
+| `/speckit-plan`         | Produce `plan.md`, `research.md`, `data-model.md`, `contracts/`, `quickstart.md`                                                           |
+| `/speckit-tasks`        | Generate dependency-ordered `tasks.md`                                                                                                     |
+| `/speckit-implement`    | Build tasks on the current feature branch, P1 demo slice first                                                                             |
+| `/speckit-clarify`      | Resolve underspecified areas (up to 5 questions)                                                                                           |
+| `/speckit-userstories`  | Expand `user-stories.md` from `spec.md`                                                                                                    |
+| `/speckit-checklist`    | Requirements-quality checklist                                                                                                             |
+| `/speckit-analyze`      | Cross-check spec, plan, and tasks                                                                                                          |
 
 `/speckit-validate` and `/speckit-design-prompt` are optional. See [Validate](#speckit-validate-optional) and [Design prompt](#speckit-design-prompt-optional).
 

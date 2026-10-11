@@ -22,11 +22,12 @@ Write or update one product requirements document under `docs/prd/`. Ask only th
 This command runs before `/speckit-specify`. Stack, libraries, and file layout belong in `/speckit-plan`. Behaviour, data, and acceptance details belong in `/speckit-clarify` after a spec exists.
 
 1. **Resolve the file**
-   - Ignore files whose names end in `-validation.md` or `-design-prompt.md`.
-   - If `$ARGUMENTS` includes a path to an existing `docs/prd/*.md` PRD, update that file.
-   - Otherwise derive a 2–4 word kebab-case name from the idea (action-noun when possible, keep acronyms). Target path: `docs/prd/<name>.md`.
-   - If that path does not exist, search `docs/prd/*.md`, still ignoring validation and design-prompt files. When exactly one file is clearly the same product as the new message, update it. When several could match and the message names none, ask which path to update. That question does not count toward the five-question cap.
-   - When no file matches, create one. `mkdir -p docs/prd` and copy `.specify/templates/prd-template.md`.
+   - Each brief has its own folder: `docs/prd/<name>/<name>.md`. `<name>` is 2–4 kebab-case words. Other briefs stay in their own folders.
+   - Ignore files whose names end in `-validation.md` or `-design-prompt.md`. Ignore any other markdown in the folder. Only `<name>/<name>.md` is the PRD.
+   - If `$ARGUMENTS` includes a path to an existing PRD, update that file.
+   - Otherwise derive `<name>` from the idea (action-noun when possible, keep acronyms). Target path: `docs/prd/<name>/<name>.md`.
+   - If that path does not exist, search `docs/prd/*/*.md` for files named the same as their folder. When exactly one file is clearly the same product as the new message, update it. When several could match and the message names none, ask which path to update. That question does not count toward the five-question cap.
+   - When no file matches, create one. `mkdir -p docs/prd/<name>` and copy `.specify/templates/prd-template.md` to `docs/prd/<name>/<name>.md`.
 
 2. **Load context**
    - **IF EXISTS**: read `.specify/memory/constitution.md` per **Project memory paths** in `.cursor/rules/specify-rules.md`. Use it to prefer options that fit the project principles.
