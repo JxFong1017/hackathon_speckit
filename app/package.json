@@ -1,0 +1,19 @@
+{
+  "name": "transfer-talent-contracts",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "sku start",
+    "test": "sku test"
+  },
+  "dependencies": {
+    "braid-design-system": "34.9.1",
+    "react": "19.3.0",
+    "react-dom": "19.3.0"
+  },
+  "devDependencies": {
+    "@types/react": "19.2.2",
+    "@types/react-dom": "19.2.2",
+    "sku": "16.4.0"
+  }
+}
